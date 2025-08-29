@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Libro de Cuentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .book {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .page {
+            transform-origin: left;
+            transition: transform 0.8s ease-in-out;
+            z-index: 10;
+        }
+
+        /* Oculta los checkboxes */
+        input[type="checkbox"] {
+            display: none;
+        }
+        
+        /* Por defecto, las páginas 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 y 25 están ocultas */
+        .page[data-page="2"],
+        .page[data-page="3"],
+        .page[data-page="4"],
+        .page[data-page="5"],
+        .page[data-page="6"],
+        .page[data-page="7"],
+        .page[data-page="8"],
+        .page[data-page="9"],
+        .page[data-page="10"],
+        .page[data-page="11"],
+        .page[data-page="12"],
+        .page[data-page="13"],
+        .page[data-page="14"],
+        .page[data-page="15"],
+        .page[data-page="16"],
+        .page[data-page="17"],
+        .page[data-page="18"],
+        .page[data-page="19"],
+        .page[data-page="20"],
+        .page[data-page="21"],
+        .page[data-page="22"],
+        .page[data-page="23"],
+        .page[data-page="24"],
+        .page[data-page="25"] {
+            transform: rotateY(180deg);
+        }
+
+        /* Lógica para pasar la página hacia adelante */
+        #page-flip-1:checked ~ .page[data-page="1"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-1:checked ~ .page[data-page="2"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+
+        #page-flip-2:checked ~ .page[data-page="2"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-2:checked ~ .page[data-page="3"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+
+        #page-flip-3:checked ~ .page[data-page="3"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-3:checked ~ .page[data-page="4"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-4:checked ~ .page[data-page="4"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-4:checked ~ .page[data-page="5"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-5:checked ~ .page[data-page="5"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-5:checked ~ .page[data-page="6"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-6:checked ~ .page[data-page="6"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-6:checked ~ .page[data-page="7"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-7:checked ~ .page[data-page="7"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-7:checked ~ .page[data-page="8"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-8:checked ~ .page[data-page="8"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-8:checked ~ .page[data-page="9"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-9:checked ~ .page[data-page="9"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-9:checked ~ .page[data-page="10"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-10:checked ~ .page[data-page="10"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-10:checked ~ .page[data-page="11"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-11:checked ~ .page[data-page="11"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-11:checked ~ .page[data-page="12"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-12:checked ~ .page[data-page="12"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-12:checked ~ .page[data-page="13"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-13:checked ~ .page[data-page="13"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-13:checked ~ .page[data-page="14"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-14:checked ~ .page[data-page="14"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-14:checked ~ .page[data-page="15"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-15:checked ~ .page[data-page="15"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-15:checked ~ .page[data-page="16"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-16:checked ~ .page[data-page="16"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-16:checked ~ .page[data-page="17"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-17:checked ~ .page[data-page="17"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-17:checked ~ .page[data-page="18"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-18:checked ~ .page[data-page="18"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-18:checked ~ .page[data-page="19"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-19:checked ~ .page[data-page="19"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-19:checked ~ .page[data-page="20"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-20:checked ~ .page[data-page="20"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-20:checked ~ .page[data-page="21"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-21:checked ~ .page[data-page="21"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-21:checked ~ .page[data-page="22"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-22:checked ~ .page[data-page="22"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-22:checked ~ .page[data-page="23"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-23:checked ~ .page[data-page="23"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-23:checked ~ .page[data-page="24"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+        
+        #page-flip-24:checked ~ .page[data-page="24"] {
+            transform: rotateY(-180deg);
+            z-index: 1;
+        }
+        #page-flip-24:checked ~ .page[data-page="25"] {
+            transform: rotateY(0deg);
+            z-index: 10;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="book-container flex flex-col items-center gap-6 p-4">
+        <div id="book" class="book relative w-[800px] h-[600px] rounded-xl shadow-2xl">
+            <!-- Checkboxes para la navegación -->
+            <input type="checkbox" id="page-flip-1">
+            <input type="checkbox" id="page-flip-2">
+            <input type="checkbox" id="page-flip-3">
+            <input type="checkbox" id="page-flip-4">
+            <input type="checkbox" id="page-flip-5">
+            <input type="checkbox" id="page-flip-6">
+            <input type="checkbox" id="page-flip-7">
+            <input type="checkbox" id="page-flip-8">
+            <input type="checkbox" id="page-flip-9">
+            <input type="checkbox" id="page-flip-10">
+            <input type="checkbox" id="page-flip-11">
+            <input type="checkbox" id="page-flip-12">
+            <input type="checkbox" id="page-flip-13">
+            <input type="checkbox" id="page-flip-14">
+            <input type="checkbox" id="page-flip-15">
+            <input type="checkbox" id="page-flip-16">
+            <input type="checkbox" id="page-flip-17">
+            <input type="checkbox" id="page-flip-18">
+            <input type="checkbox" id="page-flip-19">
+            <input type="checkbox" id="page-flip-20">
+            <input type="checkbox" id="page-flip-21">
+            <input type="checkbox" id="page-flip-22">
+            <input type="checkbox" id="page-flip-23">
+            <input type="checkbox" id="page-flip-24">
+            
+            <!-- PÁGINA 1: Portada -->
+            <label for="page-flip-1" class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md flex flex-col items-center p-8 active" data-page="1">
+                <h2 class="font-bold text-4xl text-black mb-4 font-['Comic_Sans_MS']">Una historia incleíble</h2>
+                <div class="relative w-full flex flex-col items-center justify-center rounded-lg overflow-hidden">
+                    <img src="https://i.imgur.com/Hss0bor.jpeg" alt="Descripción de la imagen" class="w-7/12 object-contain">
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-1" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </label>
+
+            <!-- PÁGINA 2: Capítulo 1 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md" data-page="2">
+                <div class="page-content flex flex-col items-center justify-center p-8 h-full">
+                    <h2 class="font-bold text-4xl text-black font-['Comic_Sans_MS'] mb-4">Capítulo 1: El Corazón de Legos</h2>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        <br/>
+                        El majestuoso Titanic se deslizaba por las frías aguas del océano Atlántico. Dentro de uno de sus lujosos camarotes, un niño de nueve años no podía dormir. Estaba demasiado emocionado, pues había soñado toda su vida con estar a bordo. Ese niño se llamaba Gael.
+                    </p>
+                </div>
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-1" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-2" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 3 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md flex flex-col items-center justify-center p-8" data-page="3">
+                <img src="https://i.imgur.com/6z1evQT.jpeg" alt="Descripción de la nueva imagen" class="w-7/12 object-contain">
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-2" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-3" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 4 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md" data-page="4">
+                <div class="page-content flex flex-col items-center justify-center p-8 h-full">
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        <br/>
+                        El suave traqueteo de las máquinas del barco no era una canción de cuna para mí, ¡era la música de mi aventura! Mis padres ya dormían, pero yo no podía perder ni un segundo de mi tiempo aquí. Saqué mi caja de Legos, y el sonido de las piezas de plástico al chocar fue mi señal para empezar a crear.
+                    </p>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        Esa noche, mi misión era construir la Sala de Máquinas. Había visto fotos y me la había imaginado como un lugar increíble, lleno de calderas gigantes y pistones que se movían sin parar. Pasé horas armando las paredes, las tuberías y las máquinas.
+                    </p>
+                </div>
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-3" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-4" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+            
+            <!-- PÁGINA 5 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md flex flex-col items-center justify-center p-8" data-page="5">
+                <img src="https://i.imgur.com/19DwOhO.jpeg" alt="Descripción de la imagen" class="w-7/12 object-contain">
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-4" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-5" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 6 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md" data-page="6">
+                <div class="page-content flex flex-col items-center justify-center p-8 h-full">
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        Estaba muy orgulloso de mi trabajo, pero algo se sentía mal. Faltaba una pieza. En mis libros y mis planos, siempre había un pequeño sensor que era un freno de seguridad, algo para evitar que las máquinas se calentaran demasiado.
+                    </p>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        Miré mi modelo, y ahí estaba el hueco. Un espacio vacío. Mi papá, que es ingeniero, siempre me dice que los Legos te enseñan a entender cómo funcionan las cosas de verdad. “Si no funciona bien en tu modelo, Gael”, me había dicho, “tal vez no funcione bien en la vida real”. Esa frase no dejaba de sonar en mi cabeza.
+                    </p>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        Con el amanecer pintando el cielo, mi mente estaba en lo oscuro y ruidoso del barco. ¿Y si esa pieza de seguridad de mi modelo de Legos también faltaba en el Titanic de verdad?
+                    </p>
+                </div>
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-5" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-6" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 7 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md flex flex-col items-center justify-center p-8" data-page="7">
+                <img src="https://i.imgur.com/Jh4WO2e.jpeg" alt="Descripción de la imagen" class="w-7/12 object-contain">
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-6" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-7" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 8 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md" data-page="8">
+                <div class="page-content flex flex-col items-center justify-center p-8 h-full">
+                    <h2 class="font-bold text-4xl text-black font-['Comic_Sans_MS'] mb-4">Capítulo 2: La Puerta Prohibida</h2>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        La duda no dejaba a Gael en paz. Se levantó, se vistió en silencio y salió del camarote, decidido a encontrar respuestas. Su destino era el lugar más prohibido para un niño: la Sala de Máquinas.
+                    </p>
+                </div>
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-7" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-8" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+            
+            <!-- PÁGINA 9 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md flex flex-col items-center justify-center p-8" data-page="9">
+                <img src="https://i.imgur.com/ZaGXo70.jpeg" alt="Descripción de la imagen" class="w-7/12 object-contain">
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-8" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-9" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 10 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md" data-page="10">
+                <div class="page-content flex flex-col items-center justify-center p-8 h-full">
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        Bajé por las escaleras, una tras otra, y el aire fue cambiando. El olor a perfume y comida de arriba se fue, y un olor fuerte a vapor y metal caliente lo reemplazó. El lujo desapareció, y en su lugar había paredes de acero y pasillos estrechos. Sentí el poder de la enorme máquina bajo mis pies. Finalmente llegué a una puerta de metal. El letrero decía: "PROHIBIDO EL PASO".
+                    </p>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        A través de una pequeña ventana, pude ver el corazón del barco. Hombres con ropa sucia se movían como hormigas entre las calderas. Busqué la pieza que faltaba en mi modelo, y la encontré. O mejor dicho, no la encontré. Vi un pequeño hueco en un panel de control, con unos cables sueltos. ¡Era exactamente igual que en mi modelo de Legos!
+                    </p>
+                </div>
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-9" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-10" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+            
+            <!-- PÁGINA 11 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md flex flex-col items-center justify-center p-8" data-page="11">
+                <img src="https://i.imgur.com/JHGxCTZ.jpeg" alt="Descripción de la imagen" class="w-7/12 object-contain">
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-10" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-11" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 12 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md" data-page="12">
+                <div class="page-content flex flex-col items-center justify-center p-8 h-full">
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        El pánico me invadió. ¡No era mi imaginación! El sensor de seguridad de la caldera no estaba en su lugar.
+                    </p>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        Salí corriendo para buscar ayuda. Encontré a un oficial en la cubierta principal. Tenía un bigote grueso y una mirada de superioridad.
+                    </p>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        "¡Señor! ¡Hay un problema en la Sala de Máquinas!", le dije, sin aliento.
+                    </p>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        Él me miró con una sonrisa burlona. "¿Y qué podrías saber tú, niño, de las máquinas de este barco? Ve a jugar con tus juguetes."
+                    </p>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        La frustración me llenó. Mis Legos no eran solo juguetes. Eran mi forma de entender el mundo. Pero de repente, una idea brillante se encendió en mi mente. Si mis palabras no lo convencían, ¡mi modelo sí lo haría!
+                    </p>
+                </div>
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-11" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-12" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 13 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md flex flex-col items-center justify-center p-8" data-page="13">
+                <img src="https://i.imgur.com/pxA6Qx7.jpeg" alt="Descripción de la imagen" class="w-7/12 object-contain">
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-12" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-13" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 14 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md" data-page="14">
+                <div class="page-content flex flex-col items-center justify-center p-8 h-full">
+                    <h2 class="font-bold text-4xl text-black font-['Comic_Sans_MS'] mb-4">Capítulo 3: La Prueba de Plástico</h2>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        Con una nueva determinación, Gael regresó a su camarote. Sacó todas sus piezas de Lego, pero ya no veía juguetes; veía los engranajes y los pistones de un barco real.
+                    </p>
+                </div>
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-13" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-14" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 15 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md flex flex-col items-center justify-center p-8" data-page="15">
+                <img src="https://i.imgur.com/aPXegqK.jpeg" alt="Descripción de la imagen" class="w-7/12 object-contain">
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-14" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-15" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 16 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md" data-page="16">
+                <div class="page-content flex flex-col items-center justify-center p-8 h-full">
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        Mis manos se movían rápido, como si tuvieran vida propia. Con las piezas, construí una copia exacta del panel de control que había visto. Hice el agujero donde el sensor debería haber estado, y luego, con mucho cuidado, busqué en mi caja la pieza que se ajustaba. ¡Ahí estaba! Una pequeña pieza que se veía como el sensor de presión. Hice un suave clic, y la coloqué en el hueco.
+                    </p>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        Ahora mi modelo era mi prueba. Mi evidencia. Ya no era solo un niño hablando. Era un inventor, un pequeño ingeniero, con la verdad en sus manos.
+                    </p>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        Salí otra vez, esta vez con mi modelo bien agarrado. Encontré al oficial que me había ignorado, y con él a un hombre con ropa manchada de grasa. Él tenía que ser un ingeniero.
+                    </p>
+                </div>
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-15" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-16" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 17 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md flex flex-col items-center justify-center p-8" data-page="17">
+                <img src="https://i.imgur.com/izX5zJ7.jpeg" alt="Descripción de la imagen" class="w-7/12 object-contain">
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-16" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-17" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 18 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md" data-page="18">
+                <div class="page-content flex flex-col items-center justify-center p-8 h-full">
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        Puse mi modelo en la mesa, sin decir una palabra. El oficial se rio, pero el ingeniero se inclinó. Sus ojos, que se veían cansados, se abrieron de par en par. Vio el panel en miniatura, el hueco, y la pieza que yo había puesto en él. "¿Qué es esto?", preguntó, con una voz profunda.
+                    </p>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        "Es una copia del panel de control de la caldera tres", le expliqué. "Le falta una pieza, un sensor de presión. Mi modelo muestra qué falta y qué puede pasar si no la encuentran."
+                    </p>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        El ingeniero se levantó de golpe, con una cara muy seria. Miró al oficial y le dijo: "Tenemos que ir a revisar. Ahora mismo."
+                    </p>
+                </div>
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-17" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-18" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 19 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md flex flex-col items-center justify-center p-8" data-page="19">
+                <img src="https://i.imgur.com/eiWgmQT.jpeg" alt="Descripción de la imagen" class="w-7/12 object-contain">
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-18" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-19" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 20 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md" data-page="20">
+                <div class="page-content flex flex-col items-center justify-center p-8 h-full">
+                    <h2 class="font-bold text-4xl text-black font-['Comic_Sans_MS'] mb-4">Capítulo 4: La Pieza que Salvó el Sueño</h2>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        Los dos hombres corrieron hacia las profundidades del barco. Gael se quedó solo, sosteniendo su modelo de Lego, con el corazón latiendo muy rápido. ¿Había hecho lo correcto? ¿O solo había causado problemas?
+                    </p>
+                </div>
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-19" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-20" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 21 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md flex flex-col items-center justify-center p-8" data-page="21">
+                <img src="https://i.imgur.com/pxA6Qx7.jpeg" alt="Descripción de la imagen" class="w-7/12 object-contain">
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-20" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-21" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 22 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md" data-page="22">
+                <div class="page-content flex flex-col items-center justify-center p-8 h-full">
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        Esperé lo que pareció una eternidad. Mis manos sudaban. De pronto, oí pasos. Eran el oficial y el ingeniero, que venían hacia mí. El ingeniero se agachó y me miró con una sonrisa enorme.
+                    </p>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        "Tenías razón, hijo", me dijo. "Nos equivocamos al no creerte. La pieza no estaba. Se había caído. Si no la hubiéramos encontrado a tiempo, la caldera se habría sobrecalentado y..." No terminó la frase, pero yo entendí. Mi modelo de Legos había ayudado a salvar el barco.
+                    </p>
+                </div>
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-21" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-22" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 23 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md flex flex-col items-center justify-center p-8" data-page="23">
+                <img src="https://i.imgur.com/vnD7NYS.jpeg" alt="Descripción de la imagen" class="w-7/12 object-contain">
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-22" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-23" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 24 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md" data-page="24">
+                <div class="page-content flex flex-col items-center justify-center p-8 h-full">
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        El oficial me dio una palmada en el hombro. "Gracias, muchacho. Has hecho un gran servicio a todos los que estamos a bordo."
+                    </p>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        No podía creerlo. Yo, un niño, había salvado el barco más grande del mundo. No fue con fuerza, ni con superpoderes, sino con algo más importante: mi curiosidad y mi amor por lo que hacía.
+                    </p>
+                    <p class="text-lg text-gray-800 leading-relaxed mt-4 font-serif text-justify max-w-lg">
+                        Miré a mi alrededor. Las familias reían. Los pasajeros caminaban tranquilos. Ellos no sabían nada. Pero yo sí. Yo sabía que, gracias a mí, el corazón de este barco seguía latiendo con fuerza. Y que el Titanic ya no era solo un barco de la historia, ¡ahora era parte de mi historia!
+                    </p>
+                </div>
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-23" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+                <div class="absolute bottom-4 right-4 z-20">
+                    <label for="page-flip-24" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Siguiente</label>
+                </div>
+            </div>
+
+            <!-- PÁGINA 25 -->
+            <div class="page absolute top-0 left-0 w-full h-full bg-white rounded-lg shadow-md flex flex-col items-center justify-center p-8" data-page="25">
+                <img src="https://i.imgur.com/BYtB47b.jpeg" alt="Descripción de la imagen" class="w-7/12 object-contain">
+                <div class="absolute bottom-4 left-4 z-20">
+                    <label for="page-flip-24" class="px-6 py-2 bg-blue-500 text-white font-bold rounded-full shadow-lg cursor-pointer hover:bg-blue-600 transition-colors duration-300">Anterior</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
